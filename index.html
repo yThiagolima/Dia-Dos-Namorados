@@ -35,7 +35,7 @@
             cursor: pointer; z-index: 100; transition: opacity 1s ease-out; text-align: center;
         }
         #tela-inicial img {
-            width: 200px; /* Tamanho fixo para o coração */
+            width: 200px;
             height: 200px;
             object-fit: contain; /* Garante que a imagem inteira apareça, sem cortes */
             animation: pulsar 2.5s infinite;
@@ -58,7 +58,7 @@
         @keyframes surgir { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
         .container-bloco {
-            background-color: rgba(251, 233, 238, 0.95); /* Fundo rosa claro com transparência */
+            background-color: rgba(251, 233, 238, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 25px;
             margin-bottom: 30px;
@@ -66,15 +66,10 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
         
-        /* --- Player e Título --- */
         .titulo-player {
             font-weight: 700; font-size: 1.2rem; color: var(--cor-texto); margin-bottom: 20px;
         }
-        .spotify-fallback {
-            font-size: 0.8rem; color: #888; margin-top: 10px;
-        }
-
-        /* --- Efeitos e Estilos Gerais --- */
+        
         h1 {
             font-family: var(--fonte-titulo); font-size: 3.5rem; color: var(--cor-destaque);
             margin: 20px 0 40px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -93,27 +88,42 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 10;
         }
         .polaroid img { width: 220px; height: 240px; object-fit: cover; }
-        .polaroid:nth-child(1) { --rotation: -4deg; }
-        .polaroid:nth-child(2) { --rotation: 2deg; }
-        .polaroid:nth-child(3) { --rotation: -2deg; }
+        .polaroid:nth-child(1) { --rotation: -4deg; transform: rotate(-4deg); }
+        .polaroid:nth-child(2) { --rotation: 2deg; transform: rotate(2deg); }
+        .polaroid:nth-child(3) { --rotation: -2deg; transform: rotate(-2deg); }
+
+        .carta {
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #444;
+        }
+        .carta p { margin-bottom: 1.2em; }
         
+        .emoji {
+            position: absolute; top: -10vh; font-size: 1.5rem;
+            animation: cair linear infinite; pointer-events: none; z-index: -10;
+        }
+        @keyframes cair { to { transform: translateY(110vh) rotate(360deg); } }
+
         /* --- Media Queries para Celular --- */
         @media (max-width: 768px) {
             #conteudo-principal { padding: 10px; margin: 15px auto; }
             h1 { font-size: 2.8rem; }
             .polaroid img { width: 180px; height: 200px; }
             .container-bloco { padding: 20px; }
+            .carta { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
+    <div id="container-emojis"></div>
     <div id="tela-inicial">
-        <img src="https://placehold.co/200x200/4a3037/fbe9ee?text=%E2%9D%A4&font=lato" alt="Coração">
+        <img src="imagens/core.png" alt="Coração">
         <p>Toque para abrir meu coração</p>
     </div>
 
     <main id="conteudo-principal">
-        <h1>Feito para Você, Meu Amor</h1>
 
         <div class="container-bloco">
             <h2 class="titulo-player">Nossa Trilha Sonora</h2>
@@ -125,17 +135,28 @@
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                     loading="lazy">
             </iframe>
-            <p class="spotify-fallback">Se o player de música não aparecer acima, desative seu AdBlock para esta página ou tente em outro navegador (como o Chrome).</p>
         </div>
 
         <div class="container-bloco">
             <div class="galeria-polaroid">
-                <div class="polaroid"><img src="https://placehold.co/220x240/a38c8c/FFFFFF?text=Foto+1" alt="Foto de vocês"></div>
-                <div class="polaroid"><img src="https://placehold.co/220x240/8ca3a3/FFFFFF?text=Foto+2" alt="Outra foto de vocês"></div>
-                <div class="polaroid"><img src="https://placehold.co/220x240/a3a38c/FFFFFF?text=Foto+3" alt="Lembrança especial"></div>
+                <div class="polaroid"><img src="imagens/foto1.png" alt="Foto de nós dois"></div>
+                <div class="polaroid"><img src="imagens/foto2.png" alt="Outra foto nossa"></div>
+                <div class="polaroid"><img src="imagens/foto3.png" alt="Lembrança especial"></div>
             </div>
         </div>
         
+        <div class="container-bloco carta">
+            <h1>Feliz Dia dos Namorados!</h1>
+            <p><strong>Meu amor,</strong></p>
+            <p>Se eu tentasse descrever em palavras tudo o que você significa para mim, falharia miseravelmente. Porque o que eu sinto transcende qualquer texto, poema ou canção. É um sentimento que mora no silêncio do nosso olhar, no conforto do seu abraço e na paz que sua presença me traz.</p>
+            <p>Lembro do dia em que te conheci e de como, de repente, o mundo pareceu um lugar mais colorido e cheio de possibilidades. Cada momento ao seu lado se tornou uma memória preciosa, guardada com um carinho imenso no álbum do meu coração. Das nossas risadas mais bobas às conversas mais profundas, tudo contigo é especial.</p>
+            <p>Você me inspira a ser melhor, me apoia nos meus sonhos e me mostra a beleza nas coisas mais simples da vida. Com você, aprendi que o amor não é sobre grandes gestos, mas sobre a constância do cuidado, do respeito e da admiração.</p>
+            <p>Obrigada por cada sorriso, por cada conselho, por ser meu porto seguro e minha maior aventura. Que este Dia dos Namorados seja mais um capítulo da nossa linda história, e que a gente continue colecionando momentos e construindo um futuro juntos.</p>
+            <p>Eu te amo mais do que as palavras podem dizer.</p>
+            <p>Com todo o meu coração,<br>
+            <strong>Seu Nome</strong></p>
+        </div>
+
     </main>
 
     <script>
@@ -150,6 +171,28 @@
                     conteudoPrincipal.style.display = 'block';
                 }, 1000); 
             });
+
+            // Script dos emojis caindo
+            const containerEmojis = document.getElementById('container-emojis');
+            const emojis = ['❤️', '💖', '💕', '✨', '🥰', '😘'];
+            
+            function criarEmoji() {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDuration = Math.random() * 4 + 6 + 's'; // Duração maior
+                emoji.style.opacity = Math.random() * 0.5 + 0.5;
+                emoji.style.fontSize = Math.random() * 1 + 1 + 'rem';
+                containerEmojis.appendChild(emoji);
+
+                setTimeout(() => {
+                    emoji.remove();
+                }, 10000); // Remove depois de 10s
+            }
+
+            // Cria um novo emoji em intervalos
+            setInterval(criarEmoji, 400);
         });
     </script>
 </body>
