@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossa Jornada 💘</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background-color: #1b1b1b;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background-image: url('https://www.transparenttextures.com/patterns/pixel-weave.png');
+    }
+
+    .screen {
+      text-align: center;
+      background-color: #000;
+      border: 8px solid #ff4da6;
+      padding: 40px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 20px #ff4da6;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #ff4da6;
+    }
+
+    button {
+      background-color: #ff4da6;
+      color: #000;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      padding: 20px 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff4da6;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .map-screen {
+      background-color: #141414;
+      padding: 20px;
+      border: 4px dashed #ff4da6;
+    }
+  </style>
+</head>
+<body>
+  <div class="screen" id="start-screen">
+    <h1>Nossa Jornada 💘</h1>
+    <button onclick="startGame()">Pressione Start</button>
+  </div>
+
+  <div class="screen hidden" id="map-screen">
+    <h1>Fase 1: O Mapa do Amor</h1>
+    <p style="font-size: 12px; margin-top: 20px;">(Aqui entrará o minigame pixelado)</p>
+  </div>
+
+  <script>
+    function startGame() {
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('map-screen').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
