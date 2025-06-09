@@ -1,90 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nossa Jornada 💘</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Meu Amor</title>
 
-    body {
-      font-family: 'Press Start 2P', cursive;
-      background-color: #1b1b1b;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      background-image: url('https://www.transparenttextures.com/patterns/pixel-weave.png');
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
-    .screen {
-      text-align: center;
-      background-color: #000;
-      border: 8px solid #ff4da6;
-      padding: 40px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 0 20px #ff4da6;
-    }
+    <style>
+        :root {
+            --cor-principal: #f8cdda;
+            --cor-texto: #333;
+            --cor-fundo: #fff0f3;
+            --fonte-titulo: 'Dancing Script', cursive;
+            --fonte-corpo: 'Montserrat', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--fonte-corpo);
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            overflow-x: hidden;
+        }
+        #tela-inicial {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--cor-fundo);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 100; transition: opacity 1s ease-out; text-align: center;
+        }
+        #tela-inicial img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; animation: pulsar 2s infinite; }
+        #tela-inicial p { margin-top: 20px; font-size: 1.2rem; font-weight: 600; padding: 0 15px; }
+        @keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        #conteudo-principal {
+            display: none; padding: 20px; max-width: 900px;
+            margin: 0 auto; text-align: center; animation: surgir 1.5s ease-in-out;
+        }
+        @keyframes surgir { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        #player-container {
+            font-family: var(--fonte-corpo); max-width: 420px; margin: 40px auto;
+            background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 25px; text-align: center;
+        }
+        #player-container .titulo-player {
+            font-weight: 700; font-size: 1.2rem; color: var(--cor-texto); margin-bottom: 20px;
+        }
 
-    h1 {
-      font-size: 20px;
-      margin-bottom: 30px;
-      color: #ff4da6;
-    }
-
-    button {
-      background-color: #ff4da6;
-      color: #000;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 14px;
-      padding: 20px 30px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ff4da6;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .map-screen {
-      background-color: #141414;
-      padding: 20px;
-      border: 4px dashed #ff4da6;
-    }
-  </style>
+        .emoji {
+            position: absolute; top: -10vh; font-size: 2rem;
+            animation: cair linear infinite; pointer-events: none; z-index: -1;
+        }
+        @keyframes cair { to { transform: translateY(110vh) rotate(360deg); } }
+        
+        h1 { font-family: var(--fonte-titulo); font-size: 3.5rem; color: #d6336c; margin: 40px 0; }
+        
+        .galeria-polaroid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-bottom: 50px; }
+        .polaroid {
+            background: white; padding: 15px 15px 20px 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .polaroid:hover { transform: scale(1.05) rotate(0deg) !important; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 10; }
+        .polaroid img { width: 250px; height: 250px; object-fit: cover; }
+        .polaroid:nth-child(1) { transform: rotate(-5deg); }
+        .polaroid:nth-child(2) { transform: rotate(3deg); }
+        .polaroid:nth-child(3) { transform: rotate(-4deg); }
+        
+        .carta {
+            text-align: left; line-height: 1.8; font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.7); padding: 30px;
+            border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+    </style>
 </head>
 <body>
-  <div class="screen" id="start-screen">
-    <h1>Nossa Jornada 💘</h1>
-    <button onclick="startGame()">Pressione Start</button>
-  </div>
+    <div id="container-emojis"></div>
+    <div id="tela-inicial">
+        <img src="imagens/core.png" alt="Coração Pulsando">
+        <p>Toque para abrir meu coração</p>
+    </div>
+    <main id="conteudo-principal">
 
-  <div class="screen hidden" id="map-screen">
-    <h1>Fase 1: O Mapa do Amor</h1>
-    <p style="font-size: 12px; margin-top: 20px;">(Aqui entrará o minigame pixelado)</p>
-  </div>
+        <div id="player-container">
+            <h2 class="titulo-player">Para você ouvir...</h2>
+            
+            <iframe style="border-radius:12px" 
+                    src="https://open.spotify.com/embed/track/5qhN7Dy3pNEEiYXuGkb7ZJ?utm_source=generator" 
+                    width="100%" 
+                    height="152" 
+                    frameBorder="0" 
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+            </iframe>
+        </div>
 
-  <script>
-    function startGame() {
-      document.getElementById('start-screen').classList.add('hidden');
-      document.getElementById('map-screen').classList.remove('hidden');
-    }
-  </script>
+        <div class="galeria-polaroid">
+            <div class="polaroid"><img src="imagens/foto1.png" alt="Foto de vocês dois"></div>
+            <div class="polaroid"><img src="imagens/foto2.png" alt="Outra foto especial"></div>
+            <div class="polaroid"><img src="imagens/foto3.png" alt="Uma lembrança querida"></div>
+        </div>
+
+        <h1>Feliz Dia dos Namorados!</h1>
+
+        <div class="carta">
+            <p><strong>Meu amor,</strong></p>
+            <p>Se eu tentasse descrever em palavras tudo o que você significa para mim, falharia miseravelmente. Porque o que eu sinto transcende qualquer texto, poema ou canção. É um sentimento que mora no silêncio do nosso olhar, no conforto do seu abraço e na paz que sua presença me traz.</p>
+            <p>Lembro do dia em que te conheci e de como, de repente, o mundo pareceu um lugar mais colorido e cheio de possibilidades. Cada momento ao seu lado se tornou uma memória preciosa, guardada com um carinho imenso no álbum do meu coração. Das nossas risadas mais bobas às conversas mais profundas, tudo contigo é especial.</p>
+            <p>Você me inspira a ser melhor, me apoia nos meus sonhos e me mostra a beleza nas coisas mais simples da vida. Com você, aprendi que o amor não é sobre grandes gestos, mas sobre a constância do cuidado, do respeito e da admiração.</p>
+            <p>Obrigada por cada sorriso, por cada conselho, por ser meu porto seguro e minha maior aventura. Que este Dia dos Namorados seja mais um capítulo da nossa linda história, e que a gente continue colecionando momentos e construindo um futuro juntos.</p>
+            <p>Eu te amo mais do que as palavras podem dizer.</p>
+            <p>Com todo o meu coração,<br>
+            <strong>Seu Nome</strong></p>
+        </div>
+
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const telaInicial = document.getElementById('tela-inicial');
+            const conteudoPrincipal = document.getElementById('conteudo-principal');
+            
+            // Lógica para abrir o coração
+            telaInicial.addEventListener('click', () => {
+                telaInicial.style.opacity = '0';
+                setTimeout(() => {
+                    telaInicial.style.display = 'none';
+                    conteudoPrincipal.style.display = 'block';
+                }, 1000); 
+            });
+
+            // Lógica para fazer os emojis caírem
+            const containerEmojis = document.getElementById('container-emojis');
+            const emojis = ['❤️', '💖', '💕', '✨', '🥰', '😘'];
+            
+            function criarEmoji() {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDuration = Math.random() * 3 + 5 + 's';
+                emoji.style.opacity = Math.random() * 0.6 + 0.4;
+                emoji.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+                containerEmojis.appendChild(emoji);
+
+                // Remove o emoji depois que ele certamente já caiu
+                setTimeout(() => {
+                    emoji.remove();
+                }, 8000);
+            }
+
+            // Cria um novo emoji em intervalos regulares
+            setInterval(criarEmoji, 300);
+        });
+    </script>
 </body>
 </html>
