@@ -11,9 +11,10 @@
 
     <style>
         :root {
-            --cor-principal: #f8cdda;
-            --cor-texto: #333;
-            --cor-fundo: #fff0f3;
+            --cor-fundo: #4a3037; /* Tom de rosa queimado mais escuro */
+            --cor-fundo-claro: #fbe9ee; /* Rosa bem claro para contraste */
+            --cor-destaque: #e5398d; /* Rosa vibrante para títulos */
+            --cor-texto: #3f3f3f; /* Texto cinza escuro */
             --fonte-titulo: 'Dancing Script', cursive;
             --fonte-corpo: 'Montserrat', sans-serif;
         }
@@ -23,69 +24,99 @@
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
             overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, rgba(251, 233, 238, 0.2), transparent 40%);
         }
+        
+        /* --- Tela Inicial --- */
         #tela-inicial {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--cor-fundo);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             cursor: pointer; z-index: 100; transition: opacity 1s ease-out; text-align: center;
         }
-        #tela-inicial img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; animation: pulsar 2s infinite; }
-        #tela-inicial p { margin-top: 20px; font-size: 1.2rem; font-weight: 600; padding: 0 15px; }
-        @keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        #tela-inicial img {
+            width: 200px; /* Tamanho fixo para o coração */
+            height: 200px;
+            object-fit: contain; /* Garante que a imagem inteira apareça, sem cortes */
+            animation: pulsar 2.5s infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+        }
+        #tela-inicial p {
+            margin-top: 30px; font-size: 1.2rem; font-weight: 600;
+            padding: 0 20px; color: var(--cor-fundo-claro);
+        }
+        @keyframes pulsar {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
         
+        /* --- Conteúdo Principal --- */
         #conteudo-principal {
-            display: none; padding: 20px; max-width: 900px;
-            margin: 0 auto; text-align: center; animation: surgir 1.5s ease-in-out;
+            display: none; padding: 15px; max-width: 900px;
+            margin: 30px auto; text-align: center; animation: surgir 1.2s ease-out;
         }
-        @keyframes surgir { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes surgir { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        #player-container {
-            font-family: var(--fonte-corpo); max-width: 420px; margin: 40px auto;
-            background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 25px; text-align: center;
+        .container-bloco {
+            background-color: rgba(251, 233, 238, 0.95); /* Fundo rosa claro com transparência */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
-        #player-container .titulo-player {
+        
+        /* --- Player e Título --- */
+        .titulo-player {
             font-weight: 700; font-size: 1.2rem; color: var(--cor-texto); margin-bottom: 20px;
         }
+        .spotify-fallback {
+            font-size: 0.8rem; color: #888; margin-top: 10px;
+        }
 
-        .emoji {
-            position: absolute; top: -10vh; font-size: 2rem;
-            animation: cair linear infinite; pointer-events: none; z-index: -1;
+        /* --- Efeitos e Estilos Gerais --- */
+        h1 {
+            font-family: var(--fonte-titulo); font-size: 3.5rem; color: var(--cor-destaque);
+            margin: 20px 0 40px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        @keyframes cair { to { transform: translateY(110vh) rotate(360deg); } }
-        
-        h1 { font-family: var(--fonte-titulo); font-size: 3.5rem; color: #d6336c; margin: 40px 0; }
-        
-        .galeria-polaroid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-bottom: 50px; }
+        .galeria-polaroid {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 25px;
+        }
         .polaroid {
-            background: white; padding: 15px 15px 20px 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: #fff; padding: 15px 15px 20px 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .polaroid:hover { transform: scale(1.05) rotate(0deg) !important; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 10; }
-        .polaroid img { width: 250px; height: 250px; object-fit: cover; }
-        .polaroid:nth-child(1) { transform: rotate(-5deg); }
-        .polaroid:nth-child(2) { transform: rotate(3deg); }
-        .polaroid:nth-child(3) { transform: rotate(-4deg); }
+        .polaroid:hover {
+            transform: scale(1.05) rotate(var(--rotation, 3deg)) !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 10;
+        }
+        .polaroid img { width: 220px; height: 240px; object-fit: cover; }
+        .polaroid:nth-child(1) { --rotation: -4deg; }
+        .polaroid:nth-child(2) { --rotation: 2deg; }
+        .polaroid:nth-child(3) { --rotation: -2deg; }
         
-        .carta {
-            text-align: left; line-height: 1.8; font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.7); padding: 30px;
-            border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        /* --- Media Queries para Celular --- */
+        @media (max-width: 768px) {
+            #conteudo-principal { padding: 10px; margin: 15px auto; }
+            h1 { font-size: 2.8rem; }
+            .polaroid img { width: 180px; height: 200px; }
+            .container-bloco { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <div id="container-emojis"></div>
     <div id="tela-inicial">
-        <img src="imagens/core.png" alt="Coração Pulsando">
+        <img src="https://placehold.co/200x200/4a3037/fbe9ee?text=%E2%9D%A4&font=lato" alt="Coração">
         <p>Toque para abrir meu coração</p>
     </div>
-    <main id="conteudo-principal">
 
-        <div id="player-container">
-            <h2 class="titulo-player">Para você ouvir...</h2>
-            
+    <main id="conteudo-principal">
+        <h1>Feito para Você, Meu Amor</h1>
+
+        <div class="container-bloco">
+            <h2 class="titulo-player">Nossa Trilha Sonora</h2>
             <iframe style="border-radius:12px" 
                     src="https://open.spotify.com/embed/track/5qhN7Dy3pNEEiYXuGkb7ZJ?utm_source=generator" 
                     width="100%" 
@@ -94,34 +125,24 @@
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                     loading="lazy">
             </iframe>
+            <p class="spotify-fallback">Se o player de música não aparecer acima, desative seu AdBlock para esta página ou tente em outro navegador (como o Chrome).</p>
         </div>
 
-        <div class="galeria-polaroid">
-            <div class="polaroid"><img src="imagens/foto1.png" alt="Foto de vocês dois"></div>
-            <div class="polaroid"><img src="imagens/foto2.png" alt="Outra foto especial"></div>
-            <div class="polaroid"><img src="imagens/foto3.png" alt="Uma lembrança querida"></div>
+        <div class="container-bloco">
+            <div class="galeria-polaroid">
+                <div class="polaroid"><img src="https://placehold.co/220x240/a38c8c/FFFFFF?text=Foto+1" alt="Foto de vocês"></div>
+                <div class="polaroid"><img src="https://placehold.co/220x240/8ca3a3/FFFFFF?text=Foto+2" alt="Outra foto de vocês"></div>
+                <div class="polaroid"><img src="https://placehold.co/220x240/a3a38c/FFFFFF?text=Foto+3" alt="Lembrança especial"></div>
+            </div>
         </div>
-
-        <h1>Feliz Dia dos Namorados!</h1>
-
-        <div class="carta">
-            <p><strong>Meu amor,</strong></p>
-            <p>Se eu tentasse descrever em palavras tudo o que você significa para mim, falharia miseravelmente. Porque o que eu sinto transcende qualquer texto, poema ou canção. É um sentimento que mora no silêncio do nosso olhar, no conforto do seu abraço e na paz que sua presença me traz.</p>
-            <p>Lembro do dia em que te conheci e de como, de repente, o mundo pareceu um lugar mais colorido e cheio de possibilidades. Cada momento ao seu lado se tornou uma memória preciosa, guardada com um carinho imenso no álbum do meu coração. Das nossas risadas mais bobas às conversas mais profundas, tudo contigo é especial.</p>
-            <p>Você me inspira a ser melhor, me apoia nos meus sonhos e me mostra a beleza nas coisas mais simples da vida. Com você, aprendi que o amor não é sobre grandes gestos, mas sobre a constância do cuidado, do respeito e da admiração.</p>
-            <p>Obrigada por cada sorriso, por cada conselho, por ser meu porto seguro e minha maior aventura. Que este Dia dos Namorados seja mais um capítulo da nossa linda história, e que a gente continue colecionando momentos e construindo um futuro juntos.</p>
-            <p>Eu te amo mais do que as palavras podem dizer.</p>
-            <p>Com todo o meu coração,<br>
-            <strong>Seu Nome</strong></p>
-        </div>
-
+        
     </main>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const telaInicial = document.getElementById('tela-inicial');
             const conteudoPrincipal = document.getElementById('conteudo-principal');
             
-            // Lógica para abrir o coração
             telaInicial.addEventListener('click', () => {
                 telaInicial.style.opacity = '0';
                 setTimeout(() => {
@@ -129,29 +150,6 @@
                     conteudoPrincipal.style.display = 'block';
                 }, 1000); 
             });
-
-            // Lógica para fazer os emojis caírem
-            const containerEmojis = document.getElementById('container-emojis');
-            const emojis = ['❤️', '💖', '💕', '✨', '🥰', '😘'];
-            
-            function criarEmoji() {
-                const emoji = document.createElement('div');
-                emoji.classList.add('emoji');
-                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                emoji.style.left = Math.random() * 100 + 'vw';
-                emoji.style.animationDuration = Math.random() * 3 + 5 + 's';
-                emoji.style.opacity = Math.random() * 0.6 + 0.4;
-                emoji.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
-                containerEmojis.appendChild(emoji);
-
-                // Remove o emoji depois que ele certamente já caiu
-                setTimeout(() => {
-                    emoji.remove();
-                }, 8000);
-            }
-
-            // Cria um novo emoji em intervalos regulares
-            setInterval(criarEmoji, 300);
         });
     </script>
 </body>
